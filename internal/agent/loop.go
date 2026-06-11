@@ -23,7 +23,7 @@ func RunMainLoop() {
 		input := strings.TrimSpace(scanner.Text())
 		input = strings.ToLower(input)
 
-		if input == "exit" || input == "quit" {
+		if input == "exit" {
 			fmt.Println("Buzz off 👋")
 			break
 		}
