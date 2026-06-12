@@ -71,7 +71,7 @@ func ProcessRequest(request string) {
 			},
 			{
 				Role:    "user",
-				Content: request,
+				Content: request, // TODO add rules based on rules file
 			},
 		},
 	}
