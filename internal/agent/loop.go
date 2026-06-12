@@ -21,16 +21,18 @@ func RunMainLoop() {
 			break
 		}
 		input := strings.TrimSpace(scanner.Text())
+
+		if input == "" {
+			continue
+		}
+
 		input = strings.ToLower(input)
 
 		if input == "exit" {
 			fmt.Println("Buzz off 👋")
 			break
 		}
-		if input == "" {
-			continue
-		}
 
-		fmt.Println("📨 received:", input)
+		ProcessRequest(input)
 	}
 }
