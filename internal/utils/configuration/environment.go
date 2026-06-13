@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/Angel-del-dev/bee/internal/utils/misc"
 	"github.com/Angel-del-dev/bee/internal/utils/types"
 )
 
@@ -20,8 +21,8 @@ func LoadEnvironment(scanner *bufio.Scanner) (types.Environment, error) {
 		return environment, nil
 	}
 
-	fmt.Println("🐝 Let's configure bee's environment! ")
-	fmt.Println("🐝 Model host(ip address or domain with port and protocol)")
+	misc.Speak("Let's configure bee's environment! ")
+	misc.Speak("Model host(ip address or domain with port and protocol)")
 	fmt.Print("🐝> ")
 	if !scanner.Scan() {
 		return environment, errors.New("Could not trigger setup, it is required for agent use")
@@ -33,7 +34,7 @@ func LoadEnvironment(scanner *bufio.Scanner) (types.Environment, error) {
 		return environment, errors.New("Host cannot be empty, please relaunch the agent")
 	}
 
-	fmt.Println("🐝 Model's name(Ex: qwen/qwen-4b)")
+	misc.Speak("Model's name(Ex: qwen/qwen-4b)")
 	fmt.Print("🐝> ")
 
 	if !scanner.Scan() {
