@@ -3,13 +3,14 @@ package network
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 
 	"github.com/Angel-del-dev/bee/internal/utils/types"
 )
 
-func ExecuteRequest(payload types.RequestPayload) (types.AgentResponse, error) {
+func ExecuteRequest(model_host string, payload types.RequestPayload) (types.AgentResponse, error) {
 	var agentResponse types.AgentResponse
 
 	jsonData, err := json.Marshal(payload)
@@ -17,7 +18,7 @@ func ExecuteRequest(payload types.RequestPayload) (types.AgentResponse, error) {
 		return agentResponse, err
 	}
 
-	url := "http://127.0.0.1:1234/v1/chat/completions" // TODO Get from configured memory
+	url := fmt.Sprintf("%s/v1/chat/completions", model_host)
 
 	response, err := http.Post(
 		url,

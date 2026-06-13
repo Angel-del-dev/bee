@@ -10,7 +10,7 @@ import (
 
 func ProcessRequest(request string) {
 	payload := types.RequestPayload{
-		Model:       "google/gemma-4-e2b", // TODO Get from configured memory
+		Model:       Memory.Environment.Model,
 		Temperature: 0.2,
 		Top_p:       0.8,
 		Max_tokens:  1000,
@@ -26,7 +26,7 @@ func ProcessRequest(request string) {
 		},
 	}
 
-	response, err := network.ExecuteRequest(payload)
+	response, err := network.ExecuteRequest(Memory.Environment.Host, payload)
 	if err != nil {
 		panic(err) // TODO Proper error handling
 	}
