@@ -47,7 +47,7 @@ func LoadEnvironment(scanner *bufio.Scanner) (types.Environment, error) {
 		return environment, errors.New("Model cannot be empty, please relaunch the agent")
 	}
 
-	err := isAlive(host, model)
+	err := IsAlive(host, model)
 	if err != nil {
 		return environment, err
 	}
@@ -63,7 +63,7 @@ func IsEnvironmentValid(environment types.Environment) bool {
 		strings.TrimSpace(environment.Model) != ""
 }
 
-func isAlive(host string, model string) error {
+func IsAlive(host string, model string) error {
 	request, err := http.NewRequest("GET", host+"/v1/models", nil)
 	if err != nil {
 		return errors.New("Invalid host or server not started")
@@ -72,7 +72,7 @@ func isAlive(host string, model string) error {
 
 	response, err := client.Do(request)
 	if err != nil {
-		return errors.New("Server not reachable")
+		return errors.New("Inactive server")
 	}
 	defer response.Body.Close()
 
