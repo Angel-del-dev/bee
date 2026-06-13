@@ -17,18 +17,25 @@ func RunMainLoop() {
 		return
 	}
 	Init()
-	configuration, err := configuration.LoadEnvironment(scanner)
+	environment, err := configuration.LoadEnvironment(scanner)
 	if err != nil {
 		misc.Speak(err.Error())
 		return
 	}
-	err = configuration.Save()
+	err = environment.Save()
 	if err != nil {
 		misc.Speak(err.Error())
 		return
 	}
 
-	Memory.Environment = configuration
+	err = configuration.IsAlive(environment.Host, environment.Model)
+
+	if err != nil {
+		misc.Speak(err.Error())
+		return
+	}
+
+	Memory.Environment = environment
 
 	Init()
 
