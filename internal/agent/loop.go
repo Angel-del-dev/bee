@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/Angel-del-dev/bee/internal/utils/configuration"
 )
 
 func RunMainLoop() {
@@ -13,6 +15,20 @@ func RunMainLoop() {
 		fmt.Println("Could not start bee")
 		return
 	}
+	Init()
+	configuration, err := configuration.LoadEnvironment(scanner)
+	if err != nil {
+		fmt.Println("🐝 ", err.Error())
+		return
+	}
+	err = configuration.Save()
+	if err != nil {
+		fmt.Println("🐝 ", err.Error())
+		return
+	}
+
+	Memory.Environment = configuration
+
 	Init()
 
 	for {
