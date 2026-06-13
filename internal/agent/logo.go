@@ -1,6 +1,10 @@
 package agent
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/Angel-del-dev/bee/internal/utils/misc"
+)
 
 func Logo() string {
 	return `
@@ -10,13 +14,13 @@ func Logo() string {
 ██╔══██╗██╔══╝  ██╔══╝
 ██████╦╝███████╗███████╗
 ╚═════╝ ╚══════╝╚══════╝
-🐝 `
+`
 }
 
 func Init() {
 	fmt.Print("\033[H\033[2J") // Clear terminal
 	fmt.Print("\033[33m")
-	fmt.Print(Logo(), RandomMessage())
-	fmt.Println()
+	fmt.Println(Logo())
+	misc.Speak(RandomMessage())
 	fmt.Print("\033[0m")
 }

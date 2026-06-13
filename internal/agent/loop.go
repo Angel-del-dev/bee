@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/Angel-del-dev/bee/internal/utils/configuration"
+	"github.com/Angel-del-dev/bee/internal/utils/misc"
 )
 
 func RunMainLoop() {
@@ -18,12 +19,12 @@ func RunMainLoop() {
 	Init()
 	configuration, err := configuration.LoadEnvironment(scanner)
 	if err != nil {
-		fmt.Println("🐝 ", err.Error())
+		misc.Speak(err.Error())
 		return
 	}
 	err = configuration.Save()
 	if err != nil {
-		fmt.Println("🐝 ", err.Error())
+		misc.Speak(err.Error())
 		return
 	}
 
@@ -45,7 +46,7 @@ func RunMainLoop() {
 		input = strings.ToLower(input)
 
 		if input == "exit" {
-			fmt.Println("Buzz off 👋")
+			misc.Speak("Buzz off 👋")
 			break
 		}
 
