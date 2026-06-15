@@ -40,5 +40,6 @@ func ExecuteRequest(model_host string, payload types.RequestPayload) (types.Agen
 		return agentResponse, err
 	}
 
+	// FIXME Parse choice content, not all models return valid json
 	return agentResponse, nil
 }
