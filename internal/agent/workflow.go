@@ -30,7 +30,8 @@ func LoopWorkflow(workflow types.AgentResponse) error {
 
 func executeOperation(op types.Operation) ([]types.Operation, error) {
 	switch op.Operation {
-
+	case "create_file":
+		return nil, operations.CreateFile(op)
 	case "talk":
 		return nil, operations.Talk(op)
 	default:
