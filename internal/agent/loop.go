@@ -8,6 +8,7 @@ import (
 
 	"github.com/Angel-del-dev/bee/internal/utils/configuration"
 	"github.com/Angel-del-dev/bee/internal/utils/misc"
+	"github.com/Angel-del-dev/bee/internal/utils/system"
 )
 
 func RunMainLoop() {
@@ -55,6 +56,15 @@ func RunMainLoop() {
 		if input == "exit" {
 			misc.Speak("Buzz off 👋")
 			break
+		}
+
+		if input == "/task" {
+			beeFile, err := system.ReadBeeFileAsTask()
+			if err != nil {
+				fmt.Errorf(err.Error())
+				continue
+			}
+			input = beeFile
 		}
 
 		workflow, err := ProcessRequest(input)
