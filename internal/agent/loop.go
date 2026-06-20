@@ -57,6 +57,11 @@ func RunMainLoop() {
 			break
 		}
 
-		ProcessRequest(input)
+		workflow, err := ProcessRequest(input)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		LoopWorkflow(workflow)
 	}
 }

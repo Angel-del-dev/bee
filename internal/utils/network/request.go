@@ -7,11 +7,13 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/Angel-del-dev/bee/internal/utils/misc"
 	"github.com/Angel-del-dev/bee/internal/utils/prompts"
 	"github.com/Angel-del-dev/bee/internal/utils/types"
 )
 
 func ExecuteRequest(model_host string, payload types.RequestPayload) (types.AgentResponse, error) {
+	misc.Think("Handling request...")
 	var agentResponse types.AgentResponse
 
 	jsonData, err := json.Marshal(payload)
