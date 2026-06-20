@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/Angel-del-dev/bee/internal/utils/prompts"
 	"github.com/Angel-del-dev/bee/internal/utils/types"
 )
 
@@ -35,11 +36,15 @@ func ExecuteRequest(model_host string, payload types.RequestPayload) (types.Agen
 		return agentResponse, err
 	}
 
-	err = json.Unmarshal(body, &agentResponse)
+	formatOutput, err := prompts.FormatOutput(body)
 	if err != nil {
 		return agentResponse, err
 	}
 
-	// FIXME Parse choice content, not all models return valid json
+	err = json.Unmarshal(formatOutput, &agentResponse)
+	if err != nil {
+		return agentResponse, err
+	}
+
 	return agentResponse, nil
 }
