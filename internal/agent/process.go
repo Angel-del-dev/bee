@@ -1,15 +1,13 @@
 package agent
 
 import (
-	"fmt"
-
 	"github.com/Angel-del-dev/bee/internal/utils/network"
 	"github.com/Angel-del-dev/bee/internal/utils/prompts"
 	"github.com/Angel-del-dev/bee/internal/utils/system"
 	"github.com/Angel-del-dev/bee/internal/utils/types"
 )
 
-func ProcessRequest(request string) {
+func ProcessRequest(request string) (types.AgentResponse, error) {
 	projectStructure := system.GetProjectTree()
 	payload := types.RequestPayload{
 		Model:       Memory.Environment.Model,
@@ -29,7 +27,7 @@ func ProcessRequest(request string) {
 	}
 	response, err := network.ExecuteRequest(Memory.Environment.Host, payload)
 	if err != nil {
-		panic(err) // TODO Proper error handling
+		return types.AgentResponse{}, err
 	}
-	fmt.Print(response)
+	return response, nil
 }
