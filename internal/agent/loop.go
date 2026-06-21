@@ -72,6 +72,10 @@ func RunMainLoop() {
 			fmt.Println(err)
 			continue
 		}
-		LoopWorkflow(workflow)
+		err = LoopWorkflow(workflow)
+		if err != nil {
+			fmt.Println(err.Error())
+			continue
+		}
 	}
 }

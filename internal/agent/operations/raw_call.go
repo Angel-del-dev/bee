@@ -1,4 +1,4 @@
-package network
+package operations
 
 import (
 	"bytes"
@@ -7,21 +7,31 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/Angel-del-dev/bee/internal/utils/misc"
-	"github.com/Angel-del-dev/bee/internal/utils/prompts"
 	"github.com/Angel-del-dev/bee/internal/utils/types"
 )
 
-func ExecuteRequest(model_host string, payload types.RequestPayload) (types.AgentResponse, error) {
-	misc.Think("Handling request...")
+func RawCall(prompt string, memory types.Memory) (types.AgentResponse, error) {
 	var agentResponse types.AgentResponse
+
+	payload := types.RequestPayload{
+		Model:       memory.Environment.Model,
+		Temperature: 0.2,
+		Top_p:       0.8,
+		Max_tokens:  1000,
+		Messages: []types.RequestMessagePayload{
+			{
+				Role:    "system",
+				Content: prompt,
+			},
+		},
+	}
+
+	url := fmt.Sprintf("%s/v1/chat/completions", memory.Environment.Host)
 
 	jsonData, err := json.Marshal(payload)
 	if err != nil {
 		return agentResponse, err
 	}
-
-	url := fmt.Sprintf("%s/v1/chat/completions", model_host)
 
 	response, err := http.Post(
 		url,
@@ -37,15 +47,11 @@ func ExecuteRequest(model_host string, payload types.RequestPayload) (types.Agen
 	if err != nil {
 		return agentResponse, err
 	}
-	formatOutput, err := prompts.FormatOutput(body)
+
+	err = json.Unmarshal(body, &agentResponse)
 	if err != nil {
 		return agentResponse, err
 	}
 
-	err = json.Unmarshal(formatOutput, &agentResponse)
-	if err != nil {
-		return agentResponse, err
-	}
-
-	return agentResponse, nil
+	return agentResponse, err
 }
